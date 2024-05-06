@@ -68,8 +68,8 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         draft: ${{ github.event.inputs.draft }}
-        tag_name: ntrace-${{ env.SHORT_SHA }}-${{ env.CURRENT_DATE }}
-        name: ${{ env.CURRENT_DATE }}
+        tag_name: ntrace-${{ env.SHORT_SHA }}
+        name: ntrace-${{ env.SHORT_SHA }}-${{ env.CURRENT_DATE }}
         body: |
           This release was created by: ${{ github.event.sender.login }}
           Release Notes: ${{ github.event.inputs.release_notes }}
