@@ -63,16 +63,19 @@ jobs:
     - name: Get short SHA
       id: short-sha
       run: echo "SHORT_SHA=$(git rev-parse --short=4 HEAD)" >> $GITHUB_ENV
-      
-    # Step 5:Create Release
+
     - name: Create Release
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
-        files: ${{ github.workspace }}/docs/*.pdf
-        tag_name: v${{ env.SHORT_SHA }}
-        name: Release ${{ env.SHORT_SHA }}
         draft: ${{ github.event.inputs.draft }}
-        prerelease: ${{ github.event.inputs.prerelease }}
+        tag_name: ntrace-${{ env.SHORT_SHA }}-${{ env.CURRENT_DATE }}
+        name: ${{ env.CURRENT_DATE }}
+        body: |
+          This release was created by: ${{ github.event.sender.login }}
+          Release Notes: ${{ github.event.inputs.release_notes }}
+        files: |
+          ${{ github.workspace }}/docs/RISC-V-N-Trace.pdf
+          ${{ github.workspace }}/docs/RISC-V-Trace-Control-Interface.pdf
+          ${{ github.workspace }}/docs/RISC-V-Trace-Connectors.pdf
       env:
         GITHUB_TOKEN: ${{ secrets.GHTOKEN }}
-      if: github.event_name == 'workflow_dispatch' 
